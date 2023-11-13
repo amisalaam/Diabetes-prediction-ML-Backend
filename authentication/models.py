@@ -1,13 +1,37 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 
 # Create your models here.
 
-class User(AbstractUser):
-    name = models.CharField(max_length=100)
-    email =models.CharField(max_length=100,unique=True)
-    password = models.CharField(max_length=100)
-    username =None
+class UserAccountManager(BaseUserManager):
+    def create_user(self,first_name,last_name,email,password = None):
+        if not email:
+            raise ValueError("Users must have an email address")
+        
+        email = self.normalize_email(email)
+        email = email.lower()
+        user = self.model(
+            first_name = first_name,
+            last_name = last_name,
+            email=email,    
+        )
+
+        user.set_password(password)
+        user.save(using = self._db)
+
+        return user
     
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS =[]
+    def create_superuser(self, email, first_name,last_name, password=None):
+        
+        user = self.create_user(
+            first_name= first_name,
+            last_name= last_name,
+            email = email,
+            password=password,
+
+            
+        )
+        user.is_admin = True
+        user.save(using=self._db)
+
+        return user
