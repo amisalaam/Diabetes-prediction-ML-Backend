@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-*@im#7j$j_0&7k33i7(e2dm*e6r!ht#c+37fd^&rq_mh=)l_#_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -31,8 +31,7 @@ INSTALLED_APPS = [
     
     #MY APPS
     'predictionApp',
-    'authentication',
-    
+    'User',
     #THIRD PARTY APPS
     'rest_framework',
     'corsheaders',
@@ -131,7 +130,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'authentication.User'
+AUTH_USER_MODEL = 'User.UserAccount'
+
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
@@ -150,3 +150,4 @@ SIMPLE_JWT ={
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
 
 }
+
